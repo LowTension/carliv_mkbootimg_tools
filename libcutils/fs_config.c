@@ -41,6 +41,8 @@
 #define O_BINARY 0
 #endif
 
+#define typeof __typeof__
+
 /* The following structure is stored little endian */
 struct fs_path_config_from_file {
     uint16_t len;

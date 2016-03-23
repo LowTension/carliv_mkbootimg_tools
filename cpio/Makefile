@@ -1,5 +1,6 @@
 # 
 # Liviu Caramida (carliv@xda), Carliv Image Kitchen source
+# for the time being, the mkbootfs will only compile under cygwin for windows.
 #
 MAKEFLAGS += --silent
 OUT = ../out
@@ -16,11 +17,11 @@ CP = cp
 all:mkbootfs
 
 mkbootfs:
-	$(CC) $@.c -o $@
-	strip $@
-	$(CP) $@ $(OUT)
+	$(CC) $@.c -o $@.exe
+	strip $@.exe
+	$(CP) $@.exe $(OUT)
 
 clean:
-	$(RM) mkbootfs
+	$(RM) mkbootfs.exe
 
 .PHONY: all clean

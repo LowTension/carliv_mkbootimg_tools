@@ -1,9 +1,10 @@
 # 
 # Liviu Caramida (carliv@xda), Carliv Image Kitchen source
+# for the moment mkbootfs will only compile in cygwin
 #
 MAKEFLAGS += --silent
 
-all:libmincrypt.a libcutils.a mkbootimg_tools mkbootfs
+all:libmincrypt.a libcutils.a mkbootimg_tools
 
 libmincrypt.a:
 	$(MAKE) -C libmincrypt
@@ -21,9 +22,12 @@ clean:
 	$(MAKE) -C libmincrypt clean
 	$(MAKE) -C libcutils clean
 	$(MAKE) -C mkbootimg clean
-	$(MAKE) -C cpio clean
 	
 clean_out:
 	$(MAKE) -C out clean
+	
+	
+clean_cpio:
+	$(MAKE) -C cpio clean
 	
 .PHONY: all clean clean_out

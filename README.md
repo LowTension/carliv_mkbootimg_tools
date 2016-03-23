@@ -5,3 +5,5 @@ The base files are from Cyanogenmod repo with Omnirom MTK implementation and Pet
 
 To build run `make all` or `make all target=32` for 32bit executables.
 The built binaries will be in `out` folder.
+
+NOTE! For mkbootfs program you need to build it under cygwin and for that run `make mkbootfs` or add `target=32` for 32bit version.

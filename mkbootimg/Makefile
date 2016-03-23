@@ -19,21 +19,21 @@ CP = cp
 all:mkbootimg unpackbootimg imageinfo
 
 mkbootimg:
-	$(CC) $@.c -o $@ $(IDIR) $(LIBS)
-	strip $@
-	$(CP) $@ $(OUT)
+	$(CC) $@.c -o $@.exe $(IDIR) $(LIBS)
+	strip $@.exe
+	$(CP) $@.exe $(OUT)
 	
 unpackbootimg:
-	$(CC) $@.c -o $@ $(IDIR) $(LIBS)
-	strip $@
-	$(CP) $@ $(OUT)
+	$(CC) $@.c -o $@.exe $(IDIR) $(LIBS)
+	strip $@.exe
+	$(CP) $@.exe $(OUT)
 	
 imageinfo:
-	$(CC) $@.c -o $@ $(IDIR) $(LIBS)
-	strip $@
-	$(CP) $@ $(OUT)
+	$(CC) $@.c -o $@.exe $(IDIR) $(LIBS)
+	strip $@.exe
+	$(CP) $@.exe $(OUT)
 
 clean:
-	$(RM) mkbootimg unpackbootimg imageinfo
+	$(RM) mkbootimg.exe unpackbootimg.exe imageinfo.exe
 	
 .PHONY: all clean

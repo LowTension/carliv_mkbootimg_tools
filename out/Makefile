@@ -5,6 +5,6 @@ MAKEFLAGS += --silent
 RM = rm -f
 
 clean:
-	$(RM) mkbootfs mkbootimg unpackbootimg imageinfo
+	$(RM) mkbootimg.exe mtkbootimg.exe unpackbootimg.exe unpackmtkimg.exe imageinfo.exe
 	
 .PHONY: clean
