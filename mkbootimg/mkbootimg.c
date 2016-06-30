@@ -315,13 +315,13 @@ int main(int argc, char **argv)
 		if(ramdisk_fn == 0) {
 			ramdisk_data = 0;
 			hdr.ramdisk_size = 0;
-		} else if(strstr(basename(bootimg),"boot")) {
+		} else if(strstr(basename(bootimg), "boot")) {
 			ramdisk_data = load_mtk_file(ramdisk_fn, &hdr.ramdisk_size, MTK_ROOTFS);
 			if(ramdisk_data == 0) {
 				fprintf(stderr," Error: could not load ramdisk '%s'\n", ramdisk_fn);
 				return 1;
 			}
-		} else if(strstr(basename(bootimg),"recovery")) {
+		} else if(strstr(basename(bootimg), "recovery")) {
 			ramdisk_data = load_mtk_file(ramdisk_fn, &hdr.ramdisk_size, MTK_RECOVERY);
 			if(ramdisk_data == 0) {
 				fprintf(stderr," Error: could not load ramdisk '%s'\n", ramdisk_fn);
