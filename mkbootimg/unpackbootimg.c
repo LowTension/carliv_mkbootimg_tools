@@ -48,7 +48,6 @@ int usage() {
     printf("\t-i|--input boot.img\n");
     printf("\t[ -o|--output output_directory]\n");
     printf("\t[ -p|--pagesize <size-in-hexadecimal> ]\n");
-    printf("\t[ --mtk 1 ]\n");
     return 0;
 }
 
@@ -57,9 +56,8 @@ int main(int argc, char** argv)
     char tmp[PATH_MAX];
     char* directory = "./";
     char* filename = NULL;
-    int pagesize = 0; 
-    int mtkheader = 0;
-    char *is_mtk = NULL;    
+    int pagesize = 0;
+	int mtkheader;    
 
     argc--;
     argv++;
@@ -75,8 +73,6 @@ int main(int argc, char** argv)
             directory = val;
         } else if(!strcmp(arg, "--pagesize") || !strcmp(arg, "-p")) {
             pagesize = strtoul(val, 0, 16);
-        } else if(!strcmp(arg, "--mtk")) {
-            is_mtk = val;
         } else {
             return usage();
         }
@@ -89,9 +85,24 @@ int main(int argc, char** argv)
 
     int total_read = 0;
     FILE* f = fopen(filename, "rb");
-    boot_img_hdr header;
+	
+	int j;
+	char mtk_magic[4] = {0x88,0x16,0x88,0x58};
+    for (j = 0; j <= 4096; j++) {
+        fseek(f, j, SEEK_SET);
+        fread(tmp, 4, 1, f);
+        if (memcmp(tmp, mtk_magic, 4) == 0)
+            break;
+    }
+    if (j > 4096) {
+        mtkheader = 0;
+    } else {
+		mtkheader = 512;
+	}  
+    fseek(f, j, SEEK_SET);
 
     //printf("Reading header...\n");
+	boot_img_hdr header;
     int i;
     for (i = 0; i <= 512; i++) {
         fseek(f, i, SEEK_SET);
@@ -110,12 +121,8 @@ int main(int argc, char** argv)
     
     printf(" Printing information for \"%s\"\n", filename);
     printf(" Unpack image utility by carliv@xda\n\n");
-    
-    if(is_mtk != 0) {
-        mtkheader = 512;
-        printf("  This image has a MTK header.\n\n");
-    }
-        
+    if(mtkheader != 0) printf(" [!] This image has a MTK header\n\n");
+            
     printf(" Header:\n\n");
     printf("  Magic            : %s\n", "ANDROID!");
     printf("  Magic offset     : %d\n\n", i);
